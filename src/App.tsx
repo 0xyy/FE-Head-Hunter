@@ -12,10 +12,10 @@ export const App = () => {
     <>
       <Header/>
       <Routes>
-        <Route path="/auth" element={<Auth/>}></Route>
-        <Route path="/hr" element={<Hr/>}></Route>
-        <Route path="/student" element={<Student/>}></Route>
-        <Route path="/admin" element={<Admin/>}></Route>
+        <Route path="/auth" element={<Auth/>}/>
+        <Route path="/hr" element={<Hr/>}/>
+        <Route path="/student" element={<Student/>}/>
+        <Route path="/admin" element={<Admin/>}/>
       </Routes>
     </>
   );
