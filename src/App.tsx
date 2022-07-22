@@ -1,13 +1,22 @@
 import React from 'react';
-import {ChakraProvider} from '@chakra-ui/react';
-import {LoadingSpinner} from "./components/LoadingSpinner/LoadingSpinner";
+import { Route, Routes } from 'react-router-dom';
+import { Header } from './components/layout/Header';
+import { Auth } from './views/Auth/Auth';
+import { Hr } from './views/Hr/Hr';
+import { Student } from './views/Student/Student';
+import { Admin } from './views/Admin/Admin';
+import './App.css';
 
-function App() {
-    return (
-        <ChakraProvider>
-            <LoadingSpinner/>
-        </ChakraProvider>
-    );
+export const App = () => {
+  return (
+    <>
+      <Header/>
+      <Routes>
+        <Route path="/auth" element={<Auth/>}/>
+        <Route path="/hr" element={<Hr/>}/>
+        <Route path="/student" element={<Student/>}/>
+        <Route path="/admin" element={<Admin/>}/>
+      </Routes>
+    </>
+  );
 }
-
-export default App;
