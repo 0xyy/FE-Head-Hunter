@@ -58,16 +58,12 @@ export const LoginForm = () => {
                                 value={formik.values.password}
                             />
                         </FormControl>
-                        <Stack spacing={10}>
+                        <Stack spacing={10} width="100%" pt="10px">
                             <Stack
                                 direction={{base: 'column', sm: 'row'}}
-                                align={'start'}
+                                align={'center'}
                                 justify={'flex-end'}>
-                                <Link color="#DADADA">Zapomniałeś hasła?</Link>
-                            </Stack>
-                            <Stack direction={{base: 'row', sm: 'row'}}>
-                                <Text color="#DADADA">Nie masz konta?</Text>
-                                <Text as='u'> <Link color="#DADADA"> Zarejestruj sie</Link></Text>
+                                <Text> <Link color="#DADADA">Zapomniałeś hasła?</Link></Text>
                                 <Button type="submit" colorScheme="red">
                                     Zaloguj się
                                 </Button>
