@@ -1,23 +1,27 @@
 import React from 'react';
-import {useFormik} from "formik";
+import { useFormik } from "formik";
 import {
     Box,
     Button,
     Flex,
     FormControl,
     Input, Link, Stack, Text,
-    VStack
+    VStack,
+    Image,
+    Center,
 } from "@chakra-ui/react";
+
+import logo from '../../assets/megak.png';
 
 export const LoginForm = () => {
     const formik = useFormik({
         initialValues: {
-            email: "",
-            password: "",
+            email: '',
+            password: '',
         },
-        onSubmit: async(values) => {
+        onSubmit: async (values) => {
 
-          await fetch(`http://localhost:3001/auth`, {
+            await fetch(`http://localhost:3001/auth`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -30,6 +34,14 @@ export const LoginForm = () => {
     return (
         <Flex align="center" justify="center" bg="#222224" height="100vh">
             <Box bg="#222224" p={6} rounded="md" border="1px" mt="20px" mb="20px">
+                <Center>
+                    <Image
+                        mb="20px"
+                        htmlWidth="80px"
+                        src={logo}
+                        alt="MegaK logo"
+                    />
+                </Center>
                 <form onSubmit={formik.handleSubmit}>
                     <VStack spacing={4} align="flex-start">
                         <FormControl>
@@ -38,7 +50,7 @@ export const LoginForm = () => {
                                 name="email"
                                 type="email"
                                 variant="filled"
-                                placeholder="email"
+                                placeholder="E-mail"
                                 onChange={formik.handleChange}
                                 value={formik.values.email}
                                 bgColor="#292A2B"
@@ -50,7 +62,7 @@ export const LoginForm = () => {
                                 id="password"
                                 name="password"
                                 type="password"
-                                placeholder="password"
+                                placeholder="Hasło"
                                 variant="filled"
                                 bgColor="#292A2B"
                                 color="#DADADA"
@@ -74,4 +86,4 @@ export const LoginForm = () => {
             </Box>
         </Flex>
     );
-}
+};
