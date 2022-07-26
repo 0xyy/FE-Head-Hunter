@@ -2,9 +2,9 @@ import React from 'react';
 import './Header.css';
 
 export const Header = () => {
-  return (
-    <div className="header">
-      Header Component
-    </div>
-  );
+    return (
+        <div className="header">
+            Header Component
+        </div>
+    );
 }

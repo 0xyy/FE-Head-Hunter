@@ -1,12 +1,12 @@
 import React from 'react';
-import {Route, Routes} from 'react-router-dom';
-import {Header} from './components/layout/Header';
-import {Auth} from './views/Auth/Auth';
-import {Hr} from './views/Hr/Hr';
-import {Student} from './views/Student/Student';
-import {Admin} from './views/Admin/Admin';
+import { Route, Routes } from 'react-router-dom';
+import { Header } from './components/layout/Header';
+import { Auth } from './views/Auth/Auth';
+import { Hr } from './views/Hr/Hr';
+import { Student } from './views/Student/Student';
+import { Admin } from './views/Admin/Admin';
 import './App.css';
-import {LoginForm} from "./components/Forms/LoginForm";
+import { LoginForm } from "./components/Forms/LoginForm";
 
 export const App = () => {
     return (

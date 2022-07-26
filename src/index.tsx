@@ -7,16 +7,16 @@ import reportWebVitals from './reportWebVitals';
 import { ChakraProvider } from '@chakra-ui/react';
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+    document.getElementById('root') as HTMLElement
 );
 root.render(
-  <React.StrictMode>
-    <BrowserRouter>
-        <ChakraProvider>
-            <App />
-        </ChakraProvider>
-    </BrowserRouter>
-  </React.StrictMode>
+    <React.StrictMode>
+        <BrowserRouter>
+            <ChakraProvider>
+                <App/>
+            </ChakraProvider>
+        </BrowserRouter>
+    </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
