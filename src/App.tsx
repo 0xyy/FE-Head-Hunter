@@ -5,14 +5,15 @@ import { Auth } from './views/Auth/Auth';
 import { Hr } from './views/Hr/Hr';
 import { Student } from './views/Student/Student';
 import { Admin } from './views/Admin/Admin';
-import './App.css';
 import { LoginForm } from "./components/Forms/LoginForm";
+
+import './App.css';
 
 export const App = () => {
     return (
         <>
-            <Header/>
-            <LoginForm/>
+            {/*<Header/>*/}
+            {/*<LoginForm/>*/}
             <Routes>
                 <Route path="/auth" element={<Auth/>}/>
                 <Route path="/hr" element={<Hr/>}/>
@@ -21,4 +22,4 @@ export const App = () => {
             </Routes>
         </>
     );
-}
+};
