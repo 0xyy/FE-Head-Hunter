@@ -17,7 +17,7 @@ interface Props {
     onClose: () => void;
 }
 
-function InfoModal(props: Props) {
+export const InfoModal = (props: Props) => {
     const {title, message, onClose, isError} = props;
     return (
         <Modal onClose={onClose} isOpen={true} isCentered>
@@ -49,5 +49,3 @@ function InfoModal(props: Props) {
         </Modal>
     );
 }
-
-export default InfoModal;
