@@ -5,8 +5,9 @@ import { Auth } from './views/Auth/Auth';
 import { Hr } from './views/Hr/Hr';
 import { Student } from './views/Student/Student';
 import { Admin } from './views/Admin/Admin';
-import './App.css';
 import { LoginForm } from "./components/Forms/LoginForm";
+import {ActivateUser} from "./views/User/ActivateUser";
+import './App.css';
 
 export const App = () => {
     return (
@@ -14,6 +15,7 @@ export const App = () => {
             <Header/>
             <LoginForm/>
             <Routes>
+                <Route path="/active/:userId/:activeToken" element={<ActivateUser/>}/>
                 <Route path="/auth" element={<Auth/>}/>
                 <Route path="/hr" element={<Hr/>}/>
                 <Route path="/student" element={<Student/>}/>
