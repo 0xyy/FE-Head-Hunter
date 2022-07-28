@@ -7,4 +7,4 @@ export const Hr = () => {
             HR View
         </div>
     );
-}
+};

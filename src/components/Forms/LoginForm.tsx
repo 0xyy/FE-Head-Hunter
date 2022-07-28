@@ -1,5 +1,5 @@
 import React from 'react';
-import { useFormik } from "formik";
+import { useFormik } from 'formik';
 import {
     Box,
     Button,
@@ -9,7 +9,7 @@ import {
     VStack,
     Image,
     Center,
-} from "@chakra-ui/react";
+} from '@chakra-ui/react';
 
 import logo from '../../assets/megak.png';
 

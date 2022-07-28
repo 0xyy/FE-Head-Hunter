@@ -7,4 +7,4 @@ export const Auth = () => {
             Auth View
         </div>
     );
-}
+};
