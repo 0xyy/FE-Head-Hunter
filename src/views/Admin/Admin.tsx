@@ -1,9 +1,8 @@
 import React from 'react';
-import { Box, Button, Center, Flex, FormControl, Heading, HStack, Input, Stack } from '@chakra-ui/react';
+import { Box, Center, Flex, Heading, HStack } from '@chakra-ui/react';
 import { AddHrForm } from '../../components/Forms/AddHrForm';
-
-import './Admin.css';
 import { AddStudentsForm } from '../../components/Forms/AddStudentsForm';
+import './Admin.css';
 
 export const Admin = () => {
     return <>
