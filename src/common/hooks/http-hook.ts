@@ -1,7 +1,8 @@
 import {useCallback, useState} from "react";
-import {RecoverPasswordRequest,EditPasswordRequest, ActivateUserRequest} from 'types';
+import {RecoverPasswordRequest,EditPasswordRequest, ActivateUserRequest, CreateHrRequest} from 'types';
 
 export type ReqBody = (
+    | CreateHrRequest
     | EditPasswordRequest
     | RecoverPasswordRequest
     | ActivateUserRequest
