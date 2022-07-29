@@ -7,4 +7,4 @@ export const Student = () => {
             Student View
         </div>
     );
-}
+};
