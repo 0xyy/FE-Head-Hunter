@@ -1,17 +1,18 @@
 import { configureStore } from '@reduxjs/toolkit'
-import hrReducer from "./redux/reducers/hrReducer";
-import userReducer from "./redux/reducers/userReducer";
-import coursantReducer from "./redux/reducers/coursantReducer";
-import authReducer from "./redux/reducers/authReducer";
+import hrSlice from "./redux/slices/hr-slice";
+import userSlice from "./redux/slices/user-slice";
+import studentSlice from "./redux/slices/student-slice";
+import authReducer from "./redux/slices/auth-slice";
 
 const store = configureStore({
     reducer: {
-        user: userReducer,
-        hr: hrReducer,
-        coursant: coursantReducer,
+        user: userSlice,
+        hr: hrSlice,
+        student: studentSlice,
         auth: authReducer
     },
     // middleware: (getDefaultMiddleware) => {},
 })
+// export type RootState = ReturnType<typeof store.getState()>
 
 export default store
