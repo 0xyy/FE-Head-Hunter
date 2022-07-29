@@ -1,4 +1,5 @@
 import {useCallback, useState} from "react";
+import {apiUrl} from "../../config/api";
 import {RecoverPasswordRequest,EditPasswordRequest, ActivateUserRequest, CreateHrRequest} from 'types';
 
 export type ReqBody = (
@@ -8,7 +9,7 @@ export type ReqBody = (
     | ActivateUserRequest
     | FormData
     | null
-    )
+)
 
 export const useHttpClient = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -25,7 +26,7 @@ export const useHttpClient = () => {
         ) => {
             try {
                 setIsLoading(true);
-                const response = await fetch(`http://localhost:3001${url}`, {
+                const response = await fetch(`${apiUrl}${url}`, {
                     method,
                     headers,
                     body: body && {body: body instanceof FormData ? body : JSON.stringify(body)}.body,
