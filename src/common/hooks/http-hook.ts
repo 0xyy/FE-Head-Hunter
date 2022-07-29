@@ -1,5 +1,6 @@
 import {useCallback, useState} from "react";
 import {RecoverPasswordRequest,EditPasswordRequest, ActivateUserRequest} from 'types';
+import {apiUrl} from "../../config/api";
 
 export type ReqBody = (
     | EditPasswordRequest
@@ -24,7 +25,7 @@ export const useHttpClient = () => {
         ) => {
             try {
                 setIsLoading(true);
-                const response = await fetch(`http://localhost:3001${url}`, {
+                const response = await fetch(`${apiUrl}${url}`, {
                     method,
                     headers,
                     body: body && {body: body instanceof FormData ? body : JSON.stringify(body)}.body,

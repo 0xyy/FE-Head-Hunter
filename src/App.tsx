@@ -15,7 +15,7 @@ export const App = () => {
             <Header/>
             <LoginForm/>
             <Routes>
-                <Route path="/active/:userId/:activeToken" element={<ActivateUser/>}/>
+                <Route path="/activate/:userId/:activeToken" element={<ActivateUser/>}/>
                 <Route path="/auth" element={<Auth/>}/>
                 <Route path="/hr" element={<Hr/>}/>
                 <Route path="/student" element={<Student/>}/>
