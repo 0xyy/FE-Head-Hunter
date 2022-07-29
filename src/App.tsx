@@ -9,11 +9,13 @@ import { LoginForm } from "./components/Forms/LoginForm";
 import {ActivateUser} from "./views/User/ActivateUser";
 import './App.css';
 
+import './App.css';
+
 export const App = () => {
     return (
         <>
-            <Header/>
-            <LoginForm/>
+            {/*<Header/>*/}
+            {/*<LoginForm/>*/}
             <Routes>
                 <Route path="/activate/:userId/:activeToken" element={<ActivateUser/>}/>
                 <Route path="/auth" element={<Auth/>}/>
@@ -23,4 +25,4 @@ export const App = () => {
             </Routes>
         </>
     );
-}
+};

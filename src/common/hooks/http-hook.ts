@@ -1,14 +1,15 @@
 import {useCallback, useState} from "react";
-import {RecoverPasswordRequest,EditPasswordRequest, ActivateUserRequest} from 'types';
 import {apiUrl} from "../../config/api";
+import {RecoverPasswordRequest,EditPasswordRequest, ActivateUserRequest, CreateHrRequest} from 'types';
 
 export type ReqBody = (
+    | CreateHrRequest
     | EditPasswordRequest
     | RecoverPasswordRequest
     | ActivateUserRequest
     | FormData
     | null
-    )
+)
 
 export const useHttpClient = () => {
     const [isLoading, setIsLoading] = useState(false);

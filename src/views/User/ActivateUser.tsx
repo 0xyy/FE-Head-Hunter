@@ -62,6 +62,7 @@ export const ActivateUser = () => {
 
     return (
         <>
+            {isLoading && <LoadingSpinner/>}
             {error && <InfoModal isError message={error} onClose={clearError} title={'Nieudana próba!'}/>}
             {result && <InfoModal message={"Przejdź do logowania."} onClose={goToLoginPage} title={result}/>}
             <Flex position="absolute" top="0" left="0" width="100%" height="100vh" align="center" justify="center"
@@ -75,7 +76,6 @@ export const ActivateUser = () => {
                             alt="MegaK logo"
                         />
                     </Center>
-                    {isLoading && <LoadingSpinner zIndex={'1'} absolute/>}
                     <form onSubmit={formik.handleSubmit}>
                         <VStack spacing={4} align="flex-start">
                             <FormControl isInvalid={!!errorTextValidation}>
