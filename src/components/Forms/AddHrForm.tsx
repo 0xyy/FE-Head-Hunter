@@ -43,7 +43,7 @@ export const AddHrForm = () => {
                     title,
                     description: body,
                     status: 'success',
-                    duration: 9000,
+                    duration: 5000,
                     isClosable: true
                 });
             }
@@ -51,6 +51,7 @@ export const AddHrForm = () => {
 
         return (
             <>
+                {isLoading && <LoadingSpinner/>}
                 {error && <InfoModal isError message={error} onClose={clearError} title={'Nieudana próba!'}/>}
                 <form onSubmit={formik.handleSubmit}>
                     <FormControl mb="10px">
@@ -81,7 +82,6 @@ export const AddHrForm = () => {
                             onChange={formik.handleChange}
                         />
                     </FormControl>
-                    {isLoading && <LoadingSpinner zIndex={'1'} absolute/>}
                     <FormControl mb="10px">
                         <Input
                             id="company"
