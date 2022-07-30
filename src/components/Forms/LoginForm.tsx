@@ -2,14 +2,22 @@ import React from 'react';
 import {useFormik} from 'formik';
 import {
     Button,
-    FormControl,
+    FormControl, FormErrorMessage,
     Input, Link, Stack, Text,
     VStack,
 } from '@chakra-ui/react';
 import {useHttpClient} from "../../common/hooks/http-hook";
 import {LoadingSpinner} from "../../common/components/LoadingSpinner/LoadingSpinner";
 import {InfoModal} from "../../common/components/InfoModal/InfoModal";
+import * as Yup from 'yup';
 
+const LoginSchema = Yup.object().shape({
+    password: Yup.string()
+        .min(2, 'Hasło jest za krótkie!')
+        .max(255, 'Hasło jest za długie!')
+        .required('Wymagane!'),
+    email: Yup.string().email('Podaj poprawny adres e-mail!').required('Wymagane!'),
+});
 
 export const LoginForm = () => {
         const {sendRequest, error, clearError, isLoading} = useHttpClient();
@@ -19,6 +27,7 @@ export const LoginForm = () => {
                 email: '',
                 password: '',
             },
+            validationSchema: LoginSchema,
             onSubmit: async (values) => {
 
                 const data = await sendRequest('/auth/login', 'POST', {
@@ -38,7 +47,7 @@ export const LoginForm = () => {
                 {error && <InfoModal isError message={error} onClose={clearError} title={'Nieudana próba!'}/>}
                 <form onSubmit={formik.handleSubmit}>
                     <VStack spacing={4} align="flex-start">
-                        <FormControl>
+                        <FormControl isInvalid={!!formik.errors.email}>
                             <Input
                                 id="email"
                                 name="email"
@@ -50,8 +59,11 @@ export const LoginForm = () => {
                                 bgColor="#292A2B"
                                 color="#DADADA"
                             />
+                            {!!formik.errors.email && (
+                                <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
+                            )}
                         </FormControl>
-                        <FormControl>
+                        <FormControl isInvalid={!!formik.errors.password}>
                             <Input
                                 id="password"
                                 name="password"
@@ -63,6 +75,9 @@ export const LoginForm = () => {
                                 onChange={formik.handleChange}
                                 value={formik.values.password}
                             />
+                            {!!formik.errors.password && (
+                                <FormErrorMessage>{formik.errors.password}</FormErrorMessage>
+                            )}
                         </FormControl>
                         <Stack spacing={10} width="100%" pt="10px">
                             <Stack
