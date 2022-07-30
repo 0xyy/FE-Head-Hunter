@@ -8,8 +8,9 @@ import {Admin} from './views/Admin/Admin';
 import {ActivateUser} from "./views/User/ActivateUser";
 import {InfoModal} from "./common/components/InfoModal/InfoModal";
 import {LoadingSpinner} from "./common/components/LoadingSpinner/LoadingSpinner";
-import './App.css';
 import {useAuth} from "./common/hooks/auth-hook";
+import {RecoverPassword} from "./views/User/RecoverPassword";
+import './App.css';
 
 export const App = () => {
     const {isLoading,error,isLoggedIn,userRole,clearError} = useAuth()
@@ -39,6 +40,7 @@ export const App = () => {
                 <Routes>
                     {routes}
                     <Route path="/activate/:userId/:activeToken" element={<ActivateUser/>}/>
+                    <Route path="/recover-password" element={<RecoverPassword/>}/>
                 </Routes>
             </>
         );
