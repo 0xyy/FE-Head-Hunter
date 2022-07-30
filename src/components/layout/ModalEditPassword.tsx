@@ -6,7 +6,7 @@ import {
     ModalContent,
     ModalFooter,
     ModalHeader,
-    ModalOverlay
+    ModalOverlay,
 } from "@chakra-ui/react";
 import {EditPasswordForm} from "../Forms/EditPasswordForm";
 
@@ -17,6 +17,7 @@ interface Props {
 
 export function ModalEditPassword(props:Props) {
     const {isOpen,onClose} = props
+
     return (
         <Modal onClose={onClose} isOpen={isOpen} isCentered>
             <ModalOverlay/>

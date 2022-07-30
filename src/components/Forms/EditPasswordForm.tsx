@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {useFormik} from 'formik';
 import {
     Button,
     FormControl, FormErrorMessage,
-    Input, Stack,
+    Input, Stack, useToast,
     VStack,
 } from '@chakra-ui/react';
 import {useHttpClient} from "../../common/hooks/http-hook";
@@ -31,6 +31,12 @@ const EditSchema = Yup.object().shape({
 
 export const EditPasswordForm = () => {
         const {sendRequest, error, clearError, isLoading} = useHttpClient();
+        const [toastMessage, setToastMessage] = useState<{title: string,body: string,status:"error" | "success" | "info" | "warning" | "loading" | undefined}>({
+            title: '',
+            body: '',
+            status: undefined,
+        });
+        const toast = useToast();
         const formik = useFormik({
             initialValues: {
                 password: '',
@@ -46,10 +52,35 @@ export const EditPasswordForm = () => {
                     'Content-Type': 'application/json',
                 });
                 if (data.isSuccess) {
-
+                    setToastMessage({
+                        status: 'success',
+                        title: 'Sukces!',
+                        body: 'Hasło zostało zmienione.',
+                    })
+                } else {
+                    setToastMessage({
+                        status: 'error',
+                        title: 'Błąd!',
+                        body: 'Problem przy zmianie hasła, spróbuj ponownie.',
+                    })
+                    formik.values.password = ''
                 }
             }
         });
+
+        useEffect(() => {
+            if (toastMessage.title !== '' && toastMessage.body !== '') {
+                const {title, body,status} = toastMessage;
+
+                toast({
+                    title,
+                    description: body,
+                    status: status,
+                    duration: 5000,
+                    isClosable: true
+                });
+            }
+        }, [toastMessage, toast]);
 
         return (
             <>

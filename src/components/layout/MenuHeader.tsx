@@ -8,7 +8,7 @@ import {
     MenuGroup,
     MenuItem,
     MenuList,
-    Text
+    Text,
 } from "@chakra-ui/react";
 import defaultIcon from "../../assets/default-icon-profil.jpg";
 import {useAuth} from "../../common/hooks/auth-hook";
@@ -18,8 +18,8 @@ import {InfoModal} from "../../common/components/InfoModal/InfoModal";
 import {ModalEditPassword} from "./ModalEditPassword";
 
 export function MenuHeader() {
-    const {sendRequest, error, clearError, isLoading} = useHttpClient();
     const [isEditPassword, setIsEditPassword] = useState(false);
+    const {sendRequest, error, clearError, isLoading} = useHttpClient();
     const {avatarUrl, userFullName, logout} = useAuth();
 
     const logoutClick = async () => {
@@ -33,7 +33,7 @@ export function MenuHeader() {
         <>
             {isLoading && <LoadingSpinner/>}
             {error && <InfoModal isError message={error} onClose={clearError} title={'Nieudana próba!'}/>}
-            <ModalEditPassword isOpen={isEditPassword} onClose={()=>setIsEditPassword(false)}/>
+            <ModalEditPassword isOpen={isEditPassword} onClose={() => setIsEditPassword(false)}/>
             <Menu autoSelect={false}>
                 <MenuButton mr="12.76%">
                     <Flex align="center"
