@@ -5,17 +5,14 @@ import { Auth } from './views/Auth/Auth';
 import { Hr } from './views/Hr/Hr';
 import { Student } from './views/Student/Student';
 import { Admin } from './views/Admin/Admin';
-import { LoginForm } from "./components/Forms/LoginForm";
 import {ActivateUser} from "./views/User/ActivateUser";
-import './App.css';
-
 import './App.css';
 
 export const App = () => {
     return (
         <>
-            {/*<Header/>*/}
-            {/*<LoginForm/>*/}
+            <Header/>
+            <Auth/>
             <Routes>
                 <Route path="/activate/:userId/:activeToken" element={<ActivateUser/>}/>
                 <Route path="/auth" element={<Auth/>}/>
