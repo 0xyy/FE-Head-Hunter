@@ -10,6 +10,7 @@ import {useHttpClient} from "../../common/hooks/http-hook";
 import {LoadingSpinner} from "../../common/components/LoadingSpinner/LoadingSpinner";
 import {InfoModal} from "../../common/components/InfoModal/InfoModal";
 import * as Yup from 'yup';
+import {useAuth} from "../../common/hooks/auth-hook";
 
 const LoginSchema = Yup.object().shape({
     password: Yup.string()
@@ -21,7 +22,7 @@ const LoginSchema = Yup.object().shape({
 
 export const LoginForm = () => {
         const {sendRequest, error, clearError, isLoading} = useHttpClient();
-
+        const {login} = useAuth();
         const formik = useFormik({
             initialValues: {
                 email: '',
@@ -29,7 +30,6 @@ export const LoginForm = () => {
             },
             validationSchema: LoginSchema,
             onSubmit: async (values) => {
-
                 const data = await sendRequest('/auth/login', 'POST', {
                     email: values.email,
                     pwd: values.password,
@@ -37,6 +37,7 @@ export const LoginForm = () => {
                     'Content-Type': 'application/json',
                 });
                 if (data.isSuccess) {
+                    login(data.userFullName,data.userId,data.userRole,data.avatarUrl);
                 }
             }
         });
