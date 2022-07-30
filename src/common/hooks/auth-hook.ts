@@ -4,7 +4,7 @@ import {useCallback, useEffect} from "react";
 import {logIn, logOut} from "../../redux/slices/auth-slice";
 
 export const useAuth = () => {
-    const {isLoggedIn, userRole} = useAppSelector((store) => store.auth);
+    const {isLoggedIn, userRole, userId, userFullName, avatarUrl,} = useAppSelector((store) => store.auth);
     const {sendRequest, error, clearError, isLoading} = useHttpClient();
     const dispatch = useAppDispatch();
 
@@ -39,5 +39,8 @@ export const useAuth = () => {
         isLoading,
         login,
         logout,
+        userId,
+        userFullName,
+        avatarUrl
     };
 };
