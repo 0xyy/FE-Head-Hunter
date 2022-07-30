@@ -7,6 +7,7 @@ import {
 import logo from "../../assets/megak.png";
 import './Header.css';
 import {MenuHeader} from "./MenuHeader";
+import {Link} from "react-router-dom";
 export const Header = () => {
     return (
         <Flex
@@ -21,13 +22,15 @@ export const Header = () => {
             w="100vw"
         >
             <Box ml="12.76%">
-                <Image
-                    htmlWidth="89px"
-                    height="55"
-                    src={logo}
-                    alt="MegaK logo"
-                    alignItems={'center'}
-                />
+                <Link to="/">
+                    <Image
+                        htmlWidth="89px"
+                        height="55"
+                        src={logo}
+                        alt="MegaK logo"
+                        alignItems={'center'}
+                    />
+                </Link>
             </Box>
             <MenuHeader/>
         </Flex>
