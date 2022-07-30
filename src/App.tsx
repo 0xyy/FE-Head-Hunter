@@ -10,6 +10,7 @@ import {InfoModal} from "./common/components/InfoModal/InfoModal";
 import {LoadingSpinner} from "./common/components/LoadingSpinner/LoadingSpinner";
 import {useAuth} from "./common/hooks/auth-hook";
 import {RecoverPassword} from "./views/User/RecoverPassword";
+import {NotFoundPage} from "./views/NotFoundPage/NotFoundPages";
 import './App.css';
 
 export const App = () => {
@@ -36,11 +37,12 @@ export const App = () => {
             <>
                 {isLoading && <LoadingSpinner/>}
                 {error && <InfoModal isError message={error} onClose={clearError} title={'Nieudana próba!'}/>}
-                <Header/>
+                {isLoggedIn && <Header/>}
                 <Routes>
                     {routes}
                     <Route path="/activate/:userId/:activeToken" element={<ActivateUser/>}/>
                     <Route path="/recover-password" element={<RecoverPassword/>}/>
+                    <Route path="/*" element={<NotFoundPage/>}/>
                 </Routes>
             </>
         );
