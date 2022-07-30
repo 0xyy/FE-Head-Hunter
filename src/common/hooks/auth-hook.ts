@@ -3,6 +3,7 @@ import {useHttpClient} from "./http-hook";
 import {useCallback, useEffect} from "react";
 import {logIn, logOut} from "../../redux/slices/auth-slice";
 
+let autoLogin = true;
 export const useAuth = () => {
     const {isLoggedIn, userRole, userId, userFullName, avatarUrl,} = useAppSelector((store) => store.auth);
     const {sendRequest, error, clearError, isLoading} = useHttpClient();
@@ -24,10 +25,13 @@ export const useAuth = () => {
 
     useEffect(() => {
         (async () => {
-            const data = await sendRequest('/auth/auto-login');
-            if (data.isSuccess) {
-                return login(data.userFullName, data.userId, data.userRole, data.avatarUrl);
-            } else clearError();
+            if (autoLogin) {
+                autoLogin = !autoLogin;
+                const data = await sendRequest("/auth/auto-login");
+                if (data.isSuccess) {
+                    return login(data.userFullName, data.userId, data.userRole, data.avatarUrl);
+                } else clearError();
+            }
         })();
     }, []);
 
