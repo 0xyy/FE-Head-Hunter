@@ -1,8 +1,9 @@
 import {useCallback, useState} from "react";
 import {apiUrl} from "../../config/api";
-import {RecoverPasswordRequest,EditPasswordRequest, ActivateUserRequest, CreateHrRequest} from 'types';
+import {RecoverPasswordRequest,EditPasswordRequest, ActivateUserRequest, CreateHrRequest, AuthLoginRequest} from 'types';
 
 export type ReqBody = (
+    | AuthLoginRequest
     | CreateHrRequest
     | EditPasswordRequest
     | RecoverPasswordRequest
