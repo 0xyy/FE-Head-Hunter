@@ -11,6 +11,7 @@ import {LoadingSpinner} from "../../common/components/LoadingSpinner/LoadingSpin
 import {InfoModal} from "../../common/components/InfoModal/InfoModal";
 import * as Yup from 'yup';
 import {useAuth} from "../../common/hooks/auth-hook";
+import { Link as ReachLink } from "react-router-dom";
 
 const LoginSchema = Yup.object().shape({
     password: Yup.string()
@@ -85,7 +86,7 @@ export const LoginForm = () => {
                                 direction={{base: 'column', sm: 'row'}}
                                 align={'center'}
                                 justify={'flex-end'}>
-                                <Text> <Link color="#DADADA">Zapomniałeś hasła?</Link></Text>
+                                <Text> <Link as={ReachLink} to="/recover-password" color="#DADADA">Zapomniałeś hasła?</Link></Text>
                                 <Button type="submit" colorScheme="red">
                                     Zaloguj się
                                 </Button>
