@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {
-    Box, Button,
+    Box,
     Flex,
     Image,
     Menu,
@@ -8,8 +8,6 @@ import {
     MenuGroup,
     MenuItem,
     MenuList,
-    Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader,
-    ModalOverlay,
     Text
 } from "@chakra-ui/react";
 import defaultIcon from "../../assets/default-icon-profil.jpg";
@@ -17,7 +15,7 @@ import {useAuth} from "../../common/hooks/auth-hook";
 import {useHttpClient} from "../../common/hooks/http-hook";
 import {LoadingSpinner} from "../../common/components/LoadingSpinner/LoadingSpinner";
 import {InfoModal} from "../../common/components/InfoModal/InfoModal";
-import {EditPasswordForm} from "../Forms/EditPasswordForm";
+import {ModalEditPassword} from "./ModalEditPassword";
 
 export function MenuHeader() {
     const {sendRequest, error, clearError, isLoading} = useHttpClient();
@@ -35,19 +33,7 @@ export function MenuHeader() {
         <>
             {isLoading && <LoadingSpinner/>}
             {error && <InfoModal isError message={error} onClose={clearError} title={'Nieudana próba!'}/>}
-            <Modal onClose={() => setIsEditPassword(false)} isOpen={isEditPassword} isCentered>
-                <ModalOverlay/>
-                <ModalContent bgColor="#222224" color="#F7F7F7">
-                    <ModalHeader>Zmiana Hasła</ModalHeader>
-                    <ModalCloseButton/>
-                    <ModalBody>
-                        <EditPasswordForm/>
-                    </ModalBody>
-                    <ModalFooter>
-                        <Button colorScheme="red" onClick={() => setIsEditPassword(false)}>Zamknij</Button>
-                    </ModalFooter>
-                </ModalContent>
-            </Modal>
+            <ModalEditPassword isOpen={isEditPassword} onClose={()=>setIsEditPassword(false)}/>
             <Menu autoSelect={false}>
                 <MenuButton mr="12.76%">
                     <Flex align="center"
