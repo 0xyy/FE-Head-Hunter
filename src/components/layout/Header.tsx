@@ -27,6 +27,8 @@ export const Header = () => {
             h="80px"
             bg="#1E1E1F"
             color="#F7F7F7"
+            position="fixed"
+            w="100vw"
         >
             <Box ml="12.76%">
                 <Image
