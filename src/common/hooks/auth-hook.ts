@@ -1,7 +1,7 @@
 import {useAppDispatch, useAppSelector} from "./redux-hook";
 import {useHttpClient} from "./http-hook";
 import {useCallback, useEffect} from "react";
-import {logIn} from "../../redux/slices/auth-slice";
+import {logIn, logOut} from "../../redux/slices/auth-slice";
 
 export const useAuth = () => {
     const {isLoggedIn, userRole} = useAppSelector((store) => store.auth);
@@ -18,6 +18,10 @@ export const useAuth = () => {
         }));
     }, []);
 
+    const logout = useCallback(() => {
+        dispatch(logOut(true));
+    }, []);
+
     useEffect(() => {
         (async () => {
             const data = await sendRequest('/auth/auto-login');
@@ -27,8 +31,6 @@ export const useAuth = () => {
         })();
     }, []);
 
-
-    //@TODO Add logout timer.
     return {
         isLoggedIn,
         userRole,
@@ -36,5 +38,6 @@ export const useAuth = () => {
         clearError,
         isLoading,
         login,
+        logout,
     };
 };
