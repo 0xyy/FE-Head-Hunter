@@ -1,0 +1,26 @@
+.CheckboxStar input{
+    display: none;
+}
+
+.CheckboxStar div {
+    background-color: #292A2B;
+    border-radius: 8px;
+    height: 27px;
+    width: 42px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+}
+.CheckboxStar div:hover {
+     background-color: #392d2f;
+ }
+.CheckboxStar.is-select div {
+    background-color: red;
+}
+
+.CheckboxStar.is-select span {
+color: gold;
+}
+.CheckboxStar span {
+    color: red;
+}
