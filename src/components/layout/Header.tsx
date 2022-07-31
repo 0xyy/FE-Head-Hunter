@@ -25,6 +25,8 @@ export const Header = () => {
                     wrap="wrap"
                     w="1430px"
                     h="80px"
+                    ml="20px"
+                    mr="20px"
                 >
                     <Box>
                         <Link to="/">
@@ -34,7 +36,6 @@ export const Header = () => {
                                 src={logo}
                                 alt="MegaK logo"
                                 alignItems={"center"}
-                                ml='10px'
                             />
                         </Link>
                     </Box>
