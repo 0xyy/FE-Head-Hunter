@@ -1,0 +1,23 @@
+.CheckboxButton input {
+    display: none;
+}
+
+.CheckboxButton__button {
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-size: 12px;
+    background-color: #292A2B;
+    text-align: center;
+}
+
+.CheckboxButton__button:hover {
+    background-color: #392d2f;
+}
+
+.CheckboxButton__button.is-select {
+    background-color: red;
+}
+
+.CheckboxButton__button.is-select:hover {
+    background-color: red;
+}
