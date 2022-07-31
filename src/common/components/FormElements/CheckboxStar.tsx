@@ -9,7 +9,6 @@ interface Props {
     value: string;
 }
 
-
 export function CheckboxStar(props: Props) {
     const {onChange, checked, name, value} = props;
     const [isSelect, setIsSelect] = useState(() => checked(name, value));
@@ -34,4 +33,3 @@ export function CheckboxStar(props: Props) {
         </label>
     );
 }
-
