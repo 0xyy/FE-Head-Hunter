@@ -35,7 +35,7 @@ export function MenuHeader() {
             {error && <InfoModal isError message={error} onClose={clearError} title={'Nieudana próba!'}/>}
             <ModalEditPassword isOpen={isEditPassword} onClose={() => setIsEditPassword(false)}/>
             <Menu autoSelect={false}>
-                <MenuButton mr="12.76%">
+                <MenuButton>
                     <Flex align="center"
                           justify="space-between" w="260px">
                         <Box>
