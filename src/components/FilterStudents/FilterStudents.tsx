@@ -23,11 +23,15 @@ import {useFormik} from "formik";
 import {CheckboxStar} from "../../common/components/FormElements/CheckboxStar";
 import {CheckboxButton} from "../../common/components/FormElements/CheckboxButton";
 
-export function FilterStudents() {
+interface Props {
+    isOpen: boolean;
+    onClose:() => void
+}
+
+export function FilterStudents(props:Props) {
     const [radio, setRadio] = React.useState("0");
-    const isOpen = true;
-    const onClose = () => {
-    };
+
+    const {isOpen, onClose} = props
 
     const formik = useFormik({
         initialValues: {
@@ -40,7 +44,7 @@ export function FilterStudents() {
             expectedSalaryMin: "",
             expectedSalaryMax: "",
             canTakeApprenticeship: "0",
-            monthsOfCommercialExp: "0",
+            monthsOfCommercialExp: 0,
         },
         onSubmit: async (values) => {
             console.log(formik.values);
@@ -68,7 +72,7 @@ export function FilterStudents() {
 
     };
 
-    const changeInputNumber = (v: string) => {
+    const changeInputNumber = (v: number) => {
         formik.values.monthsOfCommercialExp = v;
     };
 
@@ -351,7 +355,7 @@ export function FilterStudents() {
                                          bgColor="#292A2B"
                                          borderColor="blue.300"
                                          min={0}
-                                         onChange={(v)=> changeInputNumber(v)}
+                                         onChange={(v)=>changeInputNumber(Number(v))}
                                          defaultValue={formik.values.monthsOfCommercialExp}
                             >
                                 <NumberInputField/>
@@ -370,5 +374,6 @@ export function FilterStudents() {
                     </ModalFooter>
                 </form>
             </ModalContent>
-        </Modal>);
+        </Modal>
+    );
 }
