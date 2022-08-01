@@ -1,22 +1,22 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import "./CheckboxStar.css";
 
 interface Props {
-    onChange: (name: "courseCompletion" | "courseEngagment" | "projectDegree"| "teamProjectDegree", value: string) => void;
+    onChange: (name: "courseCompletion" | "courseEngagment" | "projectDegree"| "teamProjectDegree", value: number) => void;
     checked: (name: "courseCompletion" | "courseEngagment" | "projectDegree"| "teamProjectDegree",
-              value: string) => boolean;
+              value: number) => boolean;
     name: "courseCompletion" | "courseEngagment"| "projectDegree"| "teamProjectDegree";
-    value: string;
+    value: number;
 }
 
 export function CheckboxStar(props: Props) {
     const {onChange, checked, name, value} = props;
     const [isSelect, setIsSelect] = useState(() => checked(name, value));
 
+    useEffect(()=> {
+        setIsSelect(checked(name, value))
+    }, [checked, name, value])
 
-    function selectHandler() {
-        setIsSelect(prev => !prev);
-    }
 
     return (
         <label className={`CheckboxStar ${isSelect && "is-select"}`}>
@@ -27,7 +27,7 @@ export function CheckboxStar(props: Props) {
                 onChange={() => onChange(name, value)}
                 value={value}
             />
-            <div onClick={selectHandler}>
+            <div>
                 {value} <span>★</span>
             </div>
         </label>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {
     Button,
     Modal,
@@ -25,20 +25,19 @@ import {CheckboxButton} from "../../common/components/FormElements/CheckboxButto
 
 interface Props {
     isOpen: boolean;
-    onClose:() => void
+    onClose: () => void;
 }
 
-export function FilterStudents(props:Props) {
+export function FilterStudents(props: Props) {
     const [radio, setRadio] = React.useState("0");
-
-    const {isOpen, onClose} = props
-
+    const [refresh, setRefresh] = React.useState(false);
+    const {isOpen, onClose} = props;
     const formik = useFormik({
         initialValues: {
-            courseCompletion: [],
-            courseEngagment: [],
-            projectDegree: [],
-            teamProjectDegree: [],
+            courseCompletion: 0,
+            courseEngagment: 0,
+            projectDegree: 0,
+            teamProjectDegree: 0,
             expectedTypeWork: [],
             expectedContractType: [],
             expectedSalaryMin: "",
@@ -50,8 +49,7 @@ export function FilterStudents(props:Props) {
             console.log(formik.values);
         }
     });
-
-    const formikChangeValue = (name: "courseCompletion" | "courseEngagment" | "projectDegree" | "teamProjectDegree" | "expectedTypeWork" | "expectedContractType", value: string) => {
+    const formikChangeValue = (name: "expectedTypeWork" | "expectedContractType", value: string) => {
         const id = formik.values[name].findIndex((v) => v === value);
         if (id === -1) {
             (formik.values[name] as string[]).push(value);
@@ -60,14 +58,24 @@ export function FilterStudents(props:Props) {
         }
     };
 
-    const formikCheckValue = (name: "courseCompletion" | "courseEngagment" | "projectDegree" | "teamProjectDegree" | "expectedTypeWork" | "expectedContractType", value: string) => {
+    const formikCheckValue = (name: "expectedTypeWork" | "expectedContractType", value: string) => {
         return (formik.values[name] as string[]).includes(value);
     };
+
+    const formikChangeDegree = (name: "courseCompletion" | "courseEngagment" | "projectDegree" | "teamProjectDegree", value: number) => {
+        formik.values[name] = value;
+        setRefresh(prev => !prev);
+    };
+
+    const formikCheckDegree = (name: "courseCompletion" | "courseEngagment" | "projectDegree" | "teamProjectDegree", value: number) => {
+        if (formik.values[name] === 0) return false;
+        return formik.values[name] <= value;
+    };
     const clearAllFormikValues = () => {
-        formik.values.courseCompletion = [];
-        formik.values.courseEngagment = [];
-        formik.values.projectDegree = [];
-        formik.values.teamProjectDegree = [];
+        formik.values.courseCompletion = 0;
+        formik.values.courseEngagment = 0;
+        formik.values.projectDegree = 0;
+        formik.values.teamProjectDegree = 0;
         formik.values.expectedTypeWork = [];
 
     };
@@ -96,33 +104,33 @@ export function FilterStudents(props:Props) {
                             <HStack align="center" justifyContent="flex-start">
                                 <CheckboxStar
                                     name="courseCompletion"
-                                    value="5"
-                                    onChange={formikChangeValue}
-                                    checked={formikCheckValue}
+                                    value={5}
+                                    onChange={formikChangeDegree}
+                                    checked={formikCheckDegree}
                                 />
                                 <CheckboxStar
                                     name="courseCompletion"
-                                    value="4"
-                                    onChange={formikChangeValue}
-                                    checked={formikCheckValue}
+                                    value={4}
+                                    onChange={formikChangeDegree}
+                                    checked={formikCheckDegree}
                                 />
                                 <CheckboxStar
                                     name="courseCompletion"
-                                    value="3"
-                                    onChange={formikChangeValue}
-                                    checked={formikCheckValue}
+                                    value={3}
+                                    onChange={formikChangeDegree}
+                                    checked={formikCheckDegree}
                                 />
                                 <CheckboxStar
                                     name="courseCompletion"
-                                    value="2"
-                                    onChange={formikChangeValue}
-                                    checked={formikCheckValue}
+                                    value={2}
+                                    onChange={formikChangeDegree}
+                                    checked={formikCheckDegree}
                                 />
                                 <CheckboxStar
                                     name="courseCompletion"
-                                    value="1"
-                                    onChange={formikChangeValue}
-                                    checked={formikCheckValue}
+                                    value={1}
+                                    onChange={formikChangeDegree}
+                                    checked={formikCheckDegree}
                                 />
                             </HStack>
                         </FormControl>
@@ -131,33 +139,33 @@ export function FilterStudents(props:Props) {
                             <HStack align="center" justifyContent="flex-start">
                                 <CheckboxStar
                                     name="courseEngagment"
-                                    value="5"
-                                    onChange={formikChangeValue}
-                                    checked={formikCheckValue}
+                                    value={5}
+                                    onChange={formikChangeDegree}
+                                    checked={formikCheckDegree}
                                 />
                                 <CheckboxStar
                                     name="courseEngagment"
-                                    value="4"
-                                    onChange={formikChangeValue}
-                                    checked={formikCheckValue}
+                                    value={4}
+                                    onChange={formikChangeDegree}
+                                    checked={formikCheckDegree}
                                 />
                                 <CheckboxStar
                                     name="courseEngagment"
-                                    value="3"
-                                    onChange={formikChangeValue}
-                                    checked={formikCheckValue}
+                                    value={3}
+                                    onChange={formikChangeDegree}
+                                    checked={formikCheckDegree}
                                 />
                                 <CheckboxStar
                                     name="courseEngagment"
-                                    value="2"
-                                    onChange={formikChangeValue}
-                                    checked={formikCheckValue}
+                                    value={2}
+                                    onChange={formikChangeDegree}
+                                    checked={formikCheckDegree}
                                 />
                                 <CheckboxStar
                                     name="courseEngagment"
-                                    value="1"
-                                    onChange={formikChangeValue}
-                                    checked={formikCheckValue}
+                                    value={1}
+                                    onChange={formikChangeDegree}
+                                    checked={formikCheckDegree}
                                 />
                             </HStack>
                         </FormControl>
@@ -166,33 +174,33 @@ export function FilterStudents(props:Props) {
                             <HStack align="center" justifyContent="flex-start">
                                 <CheckboxStar
                                     name="projectDegree"
-                                    value="5"
-                                    onChange={formikChangeValue}
-                                    checked={formikCheckValue}
+                                    value={5}
+                                    onChange={formikChangeDegree}
+                                    checked={formikCheckDegree}
                                 />
                                 <CheckboxStar
                                     name="projectDegree"
-                                    value="4"
-                                    onChange={formikChangeValue}
-                                    checked={formikCheckValue}
+                                    value={4}
+                                    onChange={formikChangeDegree}
+                                    checked={formikCheckDegree}
                                 />
                                 <CheckboxStar
                                     name="projectDegree"
-                                    value="3"
-                                    onChange={formikChangeValue}
-                                    checked={formikCheckValue}
+                                    value={3}
+                                    onChange={formikChangeDegree}
+                                    checked={formikCheckDegree}
                                 />
                                 <CheckboxStar
                                     name="projectDegree"
-                                    value="2"
-                                    onChange={formikChangeValue}
-                                    checked={formikCheckValue}
+                                    value={2}
+                                    onChange={formikChangeDegree}
+                                    checked={formikCheckDegree}
                                 />
                                 <CheckboxStar
                                     name="projectDegree"
-                                    value="1"
-                                    onChange={formikChangeValue}
-                                    checked={formikCheckValue}
+                                    value={1}
+                                    onChange={formikChangeDegree}
+                                    checked={formikCheckDegree}
                                 />
                             </HStack>
                         </FormControl>
@@ -201,33 +209,33 @@ export function FilterStudents(props:Props) {
                             <HStack align="center" justifyContent="flex-start">
                                 <CheckboxStar
                                     name="teamProjectDegree"
-                                    value="5"
-                                    onChange={formikChangeValue}
-                                    checked={formikCheckValue}
+                                    value={5}
+                                    onChange={formikChangeDegree}
+                                    checked={formikCheckDegree}
                                 />
                                 <CheckboxStar
                                     name="teamProjectDegree"
-                                    value="4"
-                                    onChange={formikChangeValue}
-                                    checked={formikCheckValue}
+                                    value={4}
+                                    onChange={formikChangeDegree}
+                                    checked={formikCheckDegree}
                                 />
                                 <CheckboxStar
                                     name="teamProjectDegree"
-                                    value="3"
-                                    onChange={formikChangeValue}
-                                    checked={formikCheckValue}
+                                    value={3}
+                                    onChange={formikChangeDegree}
+                                    checked={formikCheckDegree}
                                 />
                                 <CheckboxStar
                                     name="teamProjectDegree"
-                                    value="2"
-                                    onChange={formikChangeValue}
-                                    checked={formikCheckValue}
+                                    value={2}
+                                    onChange={formikChangeDegree}
+                                    checked={formikCheckDegree}
                                 />
                                 <CheckboxStar
                                     name="teamProjectDegree"
-                                    value="1"
-                                    onChange={formikChangeValue}
-                                    checked={formikCheckValue}
+                                    value={1}
+                                    onChange={formikChangeDegree}
+                                    checked={formikCheckDegree}
                                 />
                             </HStack>
                         </FormControl>
@@ -355,7 +363,7 @@ export function FilterStudents(props:Props) {
                                          bgColor="#292A2B"
                                          borderColor="blue.300"
                                          min={0}
-                                         onChange={(v)=>changeInputNumber(Number(v))}
+                                         onChange={(v) => changeInputNumber(Number(v))}
                                          defaultValue={formik.values.monthsOfCommercialExp}
                             >
                                 <NumberInputField/>
