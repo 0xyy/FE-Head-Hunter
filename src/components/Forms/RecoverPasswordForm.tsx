@@ -11,7 +11,7 @@ import {InfoModal} from "../../common/components/InfoModal/InfoModal";
 import * as Yup from "yup";
 import {Link} from "react-router-dom";
 
-const LoginSchema = Yup.object().shape({
+const RecoverSchema = Yup.object().shape({
     email: Yup.string().email("Podaj poprawny adres e-mail!").required("Wymagane!"),
 });
 
@@ -27,16 +27,16 @@ export const RecoverPasswordForm = () => {
                 email: "",
                 password: "",
             },
-            validationSchema: LoginSchema,
+            validationSchema: RecoverSchema,
             onSubmit: async (values) => {
+                setToastMessage({
+                    title: "Sukces!",
+                    body: "Jeśli e-mail jest prawidłowy. Nowe hasło zostanie wysłane.",
+                });
                 await sendRequest("/user/recover", "POST", {
                     email: values.email,
                 }, {
                     "Content-Type": "application/json",
-                });
-                setToastMessage({
-                    title: "Sukces!",
-                    body: "Jeśli e-mail jest prawidłowy. Nowe hasło zostanie wysłane.",
                 });
             }
         });
