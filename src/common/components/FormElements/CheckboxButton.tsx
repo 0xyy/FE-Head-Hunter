@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import "./CheckboxButton.css";
 
 interface Props {
@@ -7,15 +7,16 @@ interface Props {
               value: string) => boolean;
     name: "expectedTypeWork"| "expectedContractType";
     value: string;
-    text: string;
 }
 
 
 export function CheckboxButton(props: Props) {
-    const {onChange, checked, name, value,text} = props;
+    const {onChange, checked, name, value} = props;
     const [isSelect, setIsSelect] = useState(() => checked(name, value));
 
-
+    useEffect(()=> {
+        setIsSelect(checked(name, value))
+    },[onChange, checked])
     function selectHandler() {
         setIsSelect(prev => !prev);
     }
@@ -29,7 +30,7 @@ export function CheckboxButton(props: Props) {
                 onChange={() => onChange(name, value)}
                 value={value}
             />
-            <div onClick={selectHandler} className={`CheckboxButton__button ${isSelect && "is-select"}`} >{text}
+            <div onClick={selectHandler} className={`CheckboxButton__button ${isSelect && "is-select"}`} >{value}
             </div>
         </label>
     );

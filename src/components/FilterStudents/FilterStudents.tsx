@@ -23,15 +23,32 @@ import {useFormik} from "formik";
 import {CheckboxStar} from "../../common/components/FormElements/CheckboxStar";
 import {CheckboxButton} from "../../common/components/FormElements/CheckboxButton";
 
+export enum ExpectedTypeWork {
+    ALL = "Bez znaczenia",
+    REMOTE = "Praca zdalna",
+    STATIONARY = "Praca w biurze",
+    HYBRID = "Hybdrydowa",
+}
+
+export enum ExpectedContractType {
+    NOPREFERENCE = "Bez znaczenia",
+    UOP = "Umowa o prace",
+    B2B = "B2B",
+    UZ = "Umowa zlecenie",
+    UOD = "Umowa o dzieło",
+}
+
 interface Props {
     isOpen: boolean;
     onClose: () => void;
 }
 
 export function FilterStudents(props: Props) {
-    const [radio, setRadio] = React.useState("0");
-    const [refresh, setRefresh] = React.useState(false);
+    const [radio, setRadio] = useState("Nie");
+    const [commercialExp, setCommercialExp] = useState(0);
+    const [refresh, setRefresh] = useState(false);
     const {isOpen, onClose} = props;
+
     const formik = useFormik({
         initialValues: {
             courseCompletion: 0,
@@ -42,11 +59,12 @@ export function FilterStudents(props: Props) {
             expectedContractType: [],
             expectedSalaryMin: "",
             expectedSalaryMax: "",
-            canTakeApprenticeship: "0",
+            canTakeApprenticeship: "Nie",
             monthsOfCommercialExp: 0,
         },
         onSubmit: async (values) => {
             console.log(formik.values);
+            onClose();
         }
     });
     const formikChangeValue = (name: "expectedTypeWork" | "expectedContractType", value: string) => {
@@ -77,17 +95,24 @@ export function FilterStudents(props: Props) {
         formik.values.projectDegree = 0;
         formik.values.teamProjectDegree = 0;
         formik.values.expectedTypeWork = [];
-
+        formik.values.expectedContractType = [];
+        formik.values.expectedSalaryMin = "";
+        formik.values.expectedSalaryMax = "";
+        formik.values.canTakeApprenticeship = "Nie";
+        formik.values.monthsOfCommercialExp = 0;
+        setCommercialExp(0);
+        setRadio("Nie");
+        setRefresh(prev => !prev);
     };
 
     const changeInputNumber = (v: number) => {
+        setCommercialExp(v);
         formik.values.monthsOfCommercialExp = v;
     };
 
     return (
         <Modal size="lg" onClose={onClose} isOpen={isOpen} isCentered>
             <ModalOverlay/>
-
             <ModalContent bgColor="#0A0A0A" color="#F7F7F7">
                 <form onSubmit={formik.handleSubmit}>
                     <ModalHeader>
@@ -244,22 +269,19 @@ export function FilterStudents(props: Props) {
                             <HStack align="center" justifyContent="flex-start">
                                 <CheckboxButton
                                     name="expectedTypeWork"
-                                    value="1"
-                                    text="Praca zdalna"
+                                    value={ExpectedTypeWork.REMOTE}
                                     onChange={formikChangeValue}
                                     checked={formikCheckValue}
                                 />
                                 <CheckboxButton
                                     name="expectedTypeWork"
-                                    value="2"
-                                    text="Praca w biurze"
+                                    value={ExpectedTypeWork.STATIONARY}
                                     onChange={formikChangeValue}
                                     checked={formikCheckValue}
                                 />
                                 <CheckboxButton
                                     name="expectedTypeWork"
-                                    value="3"
-                                    text="Hybrydowa"
+                                    value={ExpectedTypeWork.HYBRID}
                                     onChange={formikChangeValue}
                                     checked={formikCheckValue}
                                 />
@@ -270,29 +292,25 @@ export function FilterStudents(props: Props) {
                             <HStack align="center" justifyContent="flex-start">
                                 <CheckboxButton
                                     name="expectedContractType"
-                                    value="1"
-                                    text="Umowa o prace"
+                                    value={ExpectedContractType.UOP}
                                     onChange={formikChangeValue}
                                     checked={formikCheckValue}
                                 />
                                 <CheckboxButton
                                     name="expectedContractType"
-                                    value="2"
-                                    text="B2B"
+                                    value={ExpectedContractType.B2B}
                                     onChange={formikChangeValue}
                                     checked={formikCheckValue}
                                 />
                                 <CheckboxButton
                                     name="expectedContractType"
-                                    value="3"
-                                    text="Umowa zlecenie"
+                                    value={ExpectedContractType.UZ}
                                     onChange={formikChangeValue}
                                     checked={formikCheckValue}
                                 />
                                 <CheckboxButton
                                     name="expectedContractType"
-                                    value="4"
-                                    text="Umowa o dzieło"
+                                    value={ExpectedContractType.UOD}
                                     onChange={formikChangeValue}
                                     checked={formikCheckValue}
                                 />
@@ -338,7 +356,7 @@ export function FilterStudents(props: Props) {
                                            name="canTakeApprenticeship"
                                            type="canTakeApprenticeship"
                                            onChange={formik.handleChange}
-                                           value="1">
+                                           value="Tak">
                                         <Text fontSize="14px">Tak</Text>
                                     </Radio>
                                     <Radio colorScheme="red"
@@ -347,7 +365,7 @@ export function FilterStudents(props: Props) {
                                            name="canTakeApprenticeship"
                                            type="canTakeApprenticeship"
                                            onChange={formik.handleChange}
-                                           value="0">
+                                           value="Nie">
                                         <Text fontSize="14px">Nie</Text>
                                     </Radio>
                                 </VStack>
@@ -356,22 +374,24 @@ export function FilterStudents(props: Props) {
                         <FormControl mb="15px">
                             <Text mb="5px" fontSize="14px">Ilość miesięcy doświadczenia komercyjnego kandydata w
                                 programowaniu</Text>
-                            <NumberInput id="comercialExp"
-                                         name="comercialExp"
+                            <NumberInput id="monthsOfCommercialExp"
+                                         name="monthsOfCommercialExp"
                                          w="110px"
                                          color="#DADADA"
                                          bgColor="#292A2B"
                                          borderColor="blue.300"
                                          min={0}
                                          onChange={(v) => changeInputNumber(Number(v))}
-                                         defaultValue={formik.values.monthsOfCommercialExp}
+                                         value={commercialExp}
                             >
-                                <NumberInputField/>
+                                <NumberInputField
+                                />
                                 <NumberInputStepper borderColor="red.600">
                                     <NumberIncrementStepper/>
                                     <NumberDecrementStepper/>
                                 </NumberInputStepper>
                             </NumberInput>
+
                         </FormControl>
                     </ModalBody>
                     <ModalFooter>
