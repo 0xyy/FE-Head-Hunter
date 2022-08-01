@@ -1,50 +1,55 @@
 import React from 'react';
-import { useFormik } from 'formik';
+import {useFormik} from 'formik';
 import {
-    Box,
     Button,
-    Flex,
-    FormControl,
+    FormControl, FormErrorMessage,
     Input, Link, Stack, Text,
     VStack,
-    Image,
-    Center,
 } from '@chakra-ui/react';
+import {useHttpClient} from "../../common/hooks/http-hook";
+import {LoadingSpinner} from "../../common/components/LoadingSpinner/LoadingSpinner";
+import {InfoModal} from "../../common/components/InfoModal/InfoModal";
+import * as Yup from 'yup';
+import {useAuth} from "../../common/hooks/auth-hook";
+import { Link as ReachLink } from "react-router-dom";
 
-import logo from '../../assets/megak.png';
+const LoginSchema = Yup.object().shape({
+    password: Yup.string()
+        .min(2, 'Hasło jest za krótkie!')
+        .max(255, 'Hasło jest za długie!')
+        .required('Wymagane!'),
+    email: Yup.string().email('Podaj poprawny adres e-mail!').required('Wymagane!'),
+});
 
 export const LoginForm = () => {
-    const formik = useFormik({
-        initialValues: {
-            email: '',
-            password: '',
-        },
-        onSubmit: async (values) => {
-
-            await fetch(`http://localhost:3001/auth`, {
-                method: 'POST',
-                headers: {
+        const {sendRequest, error, clearError, isLoading} = useHttpClient();
+        const {login} = useAuth();
+        const formik = useFormik({
+            initialValues: {
+                email: '',
+                password: '',
+            },
+            validationSchema: LoginSchema,
+            onSubmit: async (values) => {
+                const data = await sendRequest('/auth/login', 'POST', {
+                    email: values.email,
+                    pwd: values.password,
+                }, {
                     'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(values),
-            });
-        }
-    });
+                });
+                if (data.isSuccess) {
+                    login(data.userFullName,data.userId,data.userRole,data.avatarUrl);
+                }
+            }
+        });
 
-    return (
-        <Flex align="center" justify="center" bg="#222224" height="100vh">
-            <Box bg="#222224" p={6} rounded="md" border="1px" mt="20px" mb="20px">
-                <Center>
-                    <Image
-                        mb="20px"
-                        htmlWidth="80px"
-                        src={logo}
-                        alt="MegaK logo"
-                    />
-                </Center>
+        return (
+            <>
+                {isLoading && <LoadingSpinner/>}
+                {error && <InfoModal isError message={error} onClose={clearError} title={'Nieudana próba!'}/>}
                 <form onSubmit={formik.handleSubmit}>
                     <VStack spacing={4} align="flex-start">
-                        <FormControl>
+                        <FormControl isInvalid={!!formik.errors.email}>
                             <Input
                                 id="email"
                                 name="email"
@@ -56,8 +61,11 @@ export const LoginForm = () => {
                                 bgColor="#292A2B"
                                 color="#DADADA"
                             />
+                            {!!formik.errors.email && (
+                                <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
+                            )}
                         </FormControl>
-                        <FormControl>
+                        <FormControl isInvalid={!!formik.errors.password}>
                             <Input
                                 id="password"
                                 name="password"
@@ -69,13 +77,16 @@ export const LoginForm = () => {
                                 onChange={formik.handleChange}
                                 value={formik.values.password}
                             />
+                            {!!formik.errors.password && (
+                                <FormErrorMessage>{formik.errors.password}</FormErrorMessage>
+                            )}
                         </FormControl>
                         <Stack spacing={10} width="100%" pt="10px">
                             <Stack
                                 direction={{base: 'column', sm: 'row'}}
                                 align={'center'}
                                 justify={'flex-end'}>
-                                <Text> <Link color="#DADADA">Zapomniałeś hasła?</Link></Text>
+                                <Text> <Link as={ReachLink} to="/recover-password" color="#DADADA">Zapomniałeś hasła?</Link></Text>
                                 <Button type="submit" colorScheme="red">
                                     Zaloguj się
                                 </Button>
@@ -83,7 +94,7 @@ export const LoginForm = () => {
                         </Stack>
                     </VStack>
                 </form>
-            </Box>
-        </Flex>
-    );
-};
+            </>
+        );
+    }
+;
