@@ -9,7 +9,7 @@ import {
     Input,
     InputGroup,
     Button,
-    Image,
+    Image, Select,
 } from "@chakra-ui/react";
 import {SearchIcon} from "@chakra-ui/icons";
 import filterIcon from "../../assets/filter-icon.png";
@@ -27,10 +27,10 @@ export const Hr = () => {
     const [studentList, setStudentList] = useState<StudentAvailabilityViewInterface[]>([]);
     const [studentsCount, setStudentsCount] = useState(0);
     const {sendRequest, error, clearError, isLoading} = useHttpClient();
-    const [path,setPath] = useState(useLocation().search)
-    const [currentSite, setCurrentSite] = useState(1)
-    const [pageSize, setPageSize] = useState(10)
-    const nav = useNavigate()
+    const [path, setPath] = useState(useLocation().search);
+    const [currentSite, setCurrentSite] = useState(1);
+    const [pageSize, setPageSize] = useState(10);
+    const nav = useNavigate();
 
 
     useEffect(() => {
@@ -44,9 +44,9 @@ export const Hr = () => {
     }, [path]);
 
     const selectPageSizeHandler = (e: ChangeEvent<HTMLSelectElement>) => {
-        nav(`/?currentPage=${"1"}&pageSize=${e.target.value}`)
-        setPath(`?currentPage=${"1"}&pageSize=${e.target.value}`)
-        setPageSize(Number(e.target.value))
+        nav(`/?currentPage=${"1"}&pageSize=${e.target.value}`);
+        setPath(`?currentPage=${"1"}&pageSize=${e.target.value}`);
+        setPageSize(Number(e.target.value));
     };
 
     //@TODO porpawić wyświetlanie ilość użytkowników przy selekcie...
@@ -125,11 +125,21 @@ export const Hr = () => {
                         </Box>
                     </Flex>
                 </Center>
-                <Text>Ilość studentów</Text> <select value={useQuery('pageSize') || pageSize} onChange={selectPageSizeHandler}>
-                <option value="10">10</option>
-                <option value="15">15</option>
-                <option value="20">20</option>
-            </select>
+                <Text>Ilość studentów </Text>
+                <Select
+                    size="xs"
+                    w="60px"
+                    iconSize="15px"
+                    value={useQuery("pageSize") || pageSize}
+                    onChange={selectPageSizeHandler}
+                    bgColor="#F7F7F7"
+                    iconColor="black"
+                    color="black"
+                >
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                </Select>
                 <Text> {currentSite * pageSize} z {studentsCount}</Text>
             </Box>
         </>
