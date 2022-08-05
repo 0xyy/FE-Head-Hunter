@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useEffect, useState} from "react";
+import React, {ChangeEvent, KeyboardEvent, useEffect, useState} from "react";
 import {
     Box,
     Center,
@@ -28,10 +28,10 @@ export const Hr = () => {
     const [studentsCount, setStudentsCount] = useState(0);
     const {sendRequest, error, clearError, isLoading} = useHttpClient();
     const [path, setPath] = useState(useLocation().search);
-    const [currentSite, setCurrentSite] = useState(1);
-    const [pageSize, setPageSize] = useState(10);
+    const [currentPage, setCurrentPage] = useState(Number(useQuery("currentPage")) || 1);
+    const [pageSize, setPageSize] = useState(Number(useQuery("search")) || 10);
+    const [search, setSearch] = useState(useQuery("search") || "");
     const nav = useNavigate();
-
 
     useEffect(() => {
         (async () => {
@@ -44,10 +44,17 @@ export const Hr = () => {
     }, [path]);
 
     const selectPageSizeHandler = (e: ChangeEvent<HTMLSelectElement>) => {
-        nav(`/?currentPage=${"1"}&pageSize=${e.target.value}`);
-        setPath(`?currentPage=${"1"}&pageSize=${e.target.value}`);
+        setPath(`?search=${search}&currentPage=${currentPage}&pageSize=${e.target.value}`);
+        nav(`/?search=${search}&currentPage=${currentPage}&pageSize=${e.target.value}`)
         setPageSize(Number(e.target.value));
     };
+
+    function submitSearchHandler(e: KeyboardEvent<HTMLElement>) {
+        if (e.key === "Enter") {
+            setPath(`?search=${search}&currentPage=${currentPage}&pageSize=${pageSize}`);
+            nav(`/?search=${search}&currentPage=${currentPage}&pageSize=${pageSize}`)
+        }
+    }
 
     //@TODO porpawić wyświetlanie ilość użytkowników przy selekcie...
     return (
@@ -106,6 +113,9 @@ export const Hr = () => {
                                            variant="filled"
                                            bgColor="#1E1E1F"
                                            color="#DADADA"
+                                           value={search}
+                                           onKeyUp={submitSearchHandler}
+                                           onChange={(e) => setSearch(e.target.value)}
                                            w="365px"
                                     />
                                 </InputGroup>
@@ -140,7 +150,7 @@ export const Hr = () => {
                     <option value="15">15</option>
                     <option value="20">20</option>
                 </Select>
-                <Text> {currentSite * pageSize} z {studentsCount}</Text>
+                <Text> {currentPage * pageSize} z {studentsCount}</Text>
             </Box>
         </>
     );
