@@ -22,6 +22,7 @@ import {
 import {useFormik} from "formik";
 import {CheckboxStar} from "../../common/components/FormElements/CheckboxStar";
 import {CheckboxButton} from "../../common/components/FormElements/CheckboxButton";
+import {useNavigate} from "react-router-dom";
 
 export enum ExpectedTypeWork {
     ALL = "Bez znaczenia",
@@ -41,13 +42,16 @@ export enum ExpectedContractType {
 interface Props {
     isOpen: boolean;
     onClose: () => void;
+    path: string;
+    setPathFilter: (v: string) => void;
 }
 
 export function FilterStudents(props: Props) {
     const [radio, setRadio] = useState("Nie");
     const [commercialExp, setCommercialExp] = useState(0);
     const [refresh, setRefresh] = useState(false);
-    const {isOpen, onClose} = props;
+    const {isOpen, onClose, path, setPathFilter} = props;
+    const nav = useNavigate();
 
     const formik = useFormik({
         initialValues: {
@@ -63,10 +67,24 @@ export function FilterStudents(props: Props) {
             monthsOfCommercialExp: 0,
         },
         onSubmit: async (values) => {
-            console.log(formik.values);
+            const qs = new URLSearchParams({
+                courseCompletion: formik.values.courseCompletion + "",
+                courseEngagment: formik.values.courseEngagment + "",
+                projectDegree: formik.values.projectDegree + "",
+                teamProjectDegree: formik.values.teamProjectDegree + "",
+                expectedSalaryMin: formik.values.expectedSalaryMin === "" ? "0" : formik.values.expectedSalaryMin,
+                expectedSalaryMax: formik.values.expectedSalaryMax === "" ? "999999999" : formik.values.expectedSalaryMax,
+                canTakeApprenticeship: formik.values.canTakeApprenticeship,
+                monthsOfCommercialExp: formik.values.monthsOfCommercialExp + "",
+            });
+            const expectedTypeWorkPath = "&expectedTypeWork[]=" + formik.values.expectedTypeWork.join("&expectedTypeWork[]=");
+            const expectedContractTypePath = "&expectedContractType[]=" + formik.values.expectedContractType.join("&expectedContractType[]=");
+            setPathFilter(`&${qs}${expectedTypeWorkPath}${expectedContractTypePath}`);
+            nav(`/?${path}&${qs}${expectedTypeWorkPath}${expectedContractTypePath}`);
             onClose();
         }
     });
+
     const formikChangeValue = (name: "expectedTypeWork" | "expectedContractType", value: string) => {
         const id = formik.values[name].findIndex((v) => v === value);
         if (id === -1) {
@@ -102,7 +120,10 @@ export function FilterStudents(props: Props) {
         formik.values.monthsOfCommercialExp = 0;
         setCommercialExp(0);
         setRadio("Nie");
+        setPathFilter("");
+        nav(`/?${path}`);
         setRefresh(prev => !prev);
+        onClose();
     };
 
     const changeInputNumber = (v: number) => {
