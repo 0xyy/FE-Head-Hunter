@@ -28,7 +28,7 @@ export enum ExpectedTypeWork {
     ALL = "Bez znaczenia",
     REMOTE = "Praca zdalna",
     STATIONARY = "Praca w biurze",
-    HYBRID = "Hybdrydowa",
+    HYBRID = "Hybrydowa",
 }
 
 export enum ExpectedContractType {
@@ -72,13 +72,13 @@ export function FilterStudents(props: Props) {
                 courseEngagment: formik.values.courseEngagment + "",
                 projectDegree: formik.values.projectDegree + "",
                 teamProjectDegree: formik.values.teamProjectDegree + "",
-                expectedSalaryMin: formik.values.expectedSalaryMin === "" ? "0" : formik.values.expectedSalaryMin,
-                expectedSalaryMax: formik.values.expectedSalaryMax === "" ? "999999999" : formik.values.expectedSalaryMax,
+                expectedSalaryMin: formik.values.expectedSalaryMin,
+                expectedSalaryMax: formik.values.expectedSalaryMax,
                 canTakeApprenticeship: formik.values.canTakeApprenticeship,
                 monthsOfCommercialExp: formik.values.monthsOfCommercialExp + "",
             });
-            const expectedTypeWorkPath = "&expectedTypeWork[]=" + formik.values.expectedTypeWork.join("&expectedTypeWork[]=");
-            const expectedContractTypePath = "&expectedContractType[]=" + formik.values.expectedContractType.join("&expectedContractType[]=");
+            const expectedTypeWorkPath = "&expectedTypeWork[]=" + formik.values.expectedTypeWork?.join("&expectedTypeWork[]=");
+            const expectedContractTypePath = "&expectedContractType[]=" + formik.values.expectedContractType?.join("&expectedContractType[]=");
             setPathFilter(`&${qs}${expectedTypeWorkPath}${expectedContractTypePath}`);
             nav(`/?${path}&${qs}${expectedTypeWorkPath}${expectedContractTypePath}`);
             onClose();
