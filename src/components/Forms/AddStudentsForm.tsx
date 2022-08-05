@@ -24,8 +24,6 @@ export const AddStudentsForm = () => {
         const formData = new FormData();
         formData.append('file', file);
         const data:InsertStudentResponse = await sendRequest('/admin/createUsersFromFile', 'POST', formData,);
-        console.log(data);
-
         if (data.isSuccess === true) {
             setToastMessage({
                 title: 'Sukces!',
