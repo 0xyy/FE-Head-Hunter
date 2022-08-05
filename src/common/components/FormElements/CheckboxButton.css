@@ -8,6 +8,7 @@
     font-size: 12px;
     background-color: #292A2B;
     text-align: center;
+    cursor: pointer;
 }
 
 .CheckboxButton__button:hover {
