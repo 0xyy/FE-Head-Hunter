@@ -18,41 +18,50 @@ import {LoadingSpinner} from "../../common/components/LoadingSpinner/LoadingSpin
 import {InfoModal} from "../../common/components/InfoModal/InfoModal";
 import {ActiveStudentsResponse, StudentAvailabilityViewInterface} from "types";
 import {useLocation, useNavigate} from "react-router-dom";
-import "./Hr.css";
 import {useQuery} from "../../common/hooks/query-params";
+import {FilterStudents} from "../../components/FilterStudents/FilterStudents";
+import "./Hr.css";
 
 
 export const Hr = () => {
     const [isStudentPage, setIsStudentPage] = useState(true);
     const [studentList, setStudentList] = useState<StudentAvailabilityViewInterface[]>([]);
     const [studentsCount, setStudentsCount] = useState(0);
+    const [isFilter, setIsFilter] = useState(false);
     const {sendRequest, error, clearError, isLoading} = useHttpClient();
     const [path, setPath] = useState(useLocation().search);
+    const [pathFilter, setPathFilter] = useState("");
     const [currentPage, setCurrentPage] = useState(Number(useQuery("currentPage")) || 1);
     const [pageSize, setPageSize] = useState(Number(useQuery("search")) || 10);
     const [search, setSearch] = useState(useQuery("search") || "");
     const nav = useNavigate();
 
+    const link = useLocation().search;
     useEffect(() => {
         (async () => {
-            const data: ActiveStudentsResponse = await sendRequest(`/hr/students/available/${path}`, "GET");
+            if (link.length === 0) {
+                setSearch("");
+                setPath("");
+                setPathFilter("");
+            }
+            const data: ActiveStudentsResponse = await sendRequest(`/hr/students/available/${link}`, "GET");
             if (data.isSuccess) {
                 setStudentsCount(data.studentsCount);
                 setStudentList(data.students);
             }
         })();
-    }, [path]);
+    }, [useLocation()]);
 
     const selectPageSizeHandler = (e: ChangeEvent<HTMLSelectElement>) => {
-        setPath(`?search=${search}&currentPage=${currentPage}&pageSize=${e.target.value}`);
-        nav(`/?search=${search}&currentPage=${currentPage}&pageSize=${e.target.value}`)
+        setPath(`search=${search}&currentPage=${currentPage}&pageSize=${e.target.value}`);
+        nav(`/?search=${search}&currentPage=${currentPage}&pageSize=${e.target.value}${pathFilter}`);
         setPageSize(Number(e.target.value));
     };
 
     function submitSearchHandler(e: KeyboardEvent<HTMLElement>) {
         if (e.key === "Enter") {
-            setPath(`?search=${search}&currentPage=${currentPage}&pageSize=${pageSize}`);
-            nav(`/?search=${search}&currentPage=${currentPage}&pageSize=${pageSize}`)
+            setPath(`search=${search}&currentPage=${currentPage}&pageSize=${pageSize}`);
+            nav(`/?search=${search}&currentPage=${currentPage}&pageSize=${pageSize}${pathFilter}`);
         }
     }
 
@@ -61,6 +70,12 @@ export const Hr = () => {
         <>
             {isLoading && <LoadingSpinner/>}
             {error && <InfoModal isError message={error} onClose={clearError} title={"Nieudana próba!"}/>}
+            <FilterStudents
+                isOpen={isFilter}
+                onClose={() => setIsFilter(false)}
+                path={path}
+                setPathFilter={setPathFilter}
+            />
             <Box
                 w="100vw"
                 minH="100vh"
@@ -121,7 +136,9 @@ export const Hr = () => {
                                 </InputGroup>
                                 <Button
                                     bgColor="#1E1E1F"
-                                    color="#F7F7F7">
+                                    color="#F7F7F7"
+                                    onClick={() => setIsFilter(true)}
+                                >
                                     <Image
                                         htmlWidth="16px"
                                         src={filterIcon}
