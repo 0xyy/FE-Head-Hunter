@@ -1,20 +1,20 @@
 import React from 'react';
-import {Route, Routes} from 'react-router-dom';
-import {Header} from './components/layout/Header';
-import {Auth} from './views/Auth/Auth';
-import {Hr} from './views/Hr/Hr';
-import {Student} from './views/Student/Student';
-import {Admin} from './views/Admin/Admin';
-import {ActivateUser} from "./views/User/ActivateUser";
-import {InfoModal} from "./common/components/InfoModal/InfoModal";
-import {LoadingSpinner} from "./common/components/LoadingSpinner/LoadingSpinner";
-import {useAuth} from "./common/hooks/auth-hook";
-import {RecoverPassword} from "./views/User/RecoverPassword";
-import {NotFoundPage} from "./views/NotFoundPage/NotFoundPages";
+import { Route, Routes } from 'react-router-dom';
+import { Header } from './components/layout/Header';
+import { Auth } from './views/Auth/Auth';
+import { Hr } from './views/Hr/Hr';
+import { Student } from './views/Student/Student';
+import { Admin } from './views/Admin/Admin';
+import { ActivateUser } from "./views/User/ActivateUser";
+import { InfoModal } from "./common/components/InfoModal/InfoModal";
+import { LoadingSpinner } from "./common/components/LoadingSpinner/LoadingSpinner";
+import { useAuth } from "./common/hooks/auth-hook";
+import { RecoverPassword } from "./views/User/RecoverPassword";
+import { NotFoundPage } from "./views/NotFoundPage/NotFoundPages";
 import './App.css';
 
 export const App = () => {
-    const {isLoading,error,isLoggedIn,userRole,clearError} = useAuth()
+        const {isLoading, error, isLoggedIn, userRole, clearError} = useAuth()
         let routes;
         if (!isLoggedIn) {
             routes = <Route path="/" element={<Auth/>}/>;
