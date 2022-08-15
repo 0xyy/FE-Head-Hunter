@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import { Header } from './components/layout/Header';
 import { Auth } from './views/Auth/Auth';
 import { Hr } from './views/Hr/Hr';
-import { Student } from './views/Student/Student';
+import { StudentCV } from './views/Student/StudentCV';
 import { Admin } from './views/Admin/Admin';
 import { ActivateUser } from "./views/User/ActivateUser";
 import { InfoModal } from "./common/components/InfoModal/InfoModal";
@@ -24,7 +24,7 @@ export const App = () => {
                     routes = (<Route path="/" element={<Admin/>}/>);
                     break;
                 case 1:
-                    routes = (<Route path="/" element={<Student/>}/>);
+                    routes = (<Route path="/" element={<StudentCV/>}/>);
                     break;
                 case 2:
                     routes = (<Route path="/" element={<Hr/>}/>);
