@@ -1,4 +1,4 @@
-import React, {ChangeEvent, KeyboardEvent, useEffect, useState} from "react";
+import React, { ChangeEvent, KeyboardEvent, useEffect, useState } from "react";
 import {
     Box,
     Center,
@@ -11,27 +11,18 @@ import {
     Button,
     Image,
     Select,
-    Accordion,
-    AccordionItem,
-    AccordionButton,
-    AccordionIcon,
-    AccordionPanel,
-    WrapItem,
-    Td,
-    Table,
-    Thead,
-    Th, TableCaption, TableContainer, Tbody, Tr,
 } from "@chakra-ui/react";
-import {SearchIcon} from "@chakra-ui/icons";
+import { SearchIcon } from "@chakra-ui/icons";
 import filterIcon from "../../assets/filter-icon.png";
-import {useHttpClient} from "../../common/hooks/http-hook";
-import {LoadingSpinner} from "../../common/components/LoadingSpinner/LoadingSpinner";
-import {InfoModal} from "../../common/components/InfoModal/InfoModal";
-import {ActiveStudentsResponse, StudentAvailabilityViewInterface} from "types";
-import {useLocation, useNavigate} from "react-router-dom";
-import {useQuery} from "../../common/hooks/query-params";
-import {FilterStudents} from "../../components/FilterStudents/FilterStudents";
+import { useHttpClient } from "../../common/hooks/http-hook";
+import { LoadingSpinner } from "../../common/components/LoadingSpinner/LoadingSpinner";
+import { InfoModal } from "../../common/components/InfoModal/InfoModal";
+import { ActiveStudentsResponse, StudentAvailabilityViewInterface } from "types";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useQuery } from "../../common/hooks/query-params";
+import { FilterStudents } from "../../components/FilterStudents/FilterStudents";
 import "./Hr.css";
+import { StudentSmallInfo } from "../Student/StudentSmallInfo";
 
 
 export const Hr = () => {
@@ -160,125 +151,12 @@ export const Hr = () => {
                             </HStack>
 
                         </Box>
-                        <Box>
-                            {/*{studentList.map(student => <p key={student.studentId}>{student.firstName}</p>)}*/}
-                            <Accordion allowToggle w='100vw'>
-                                <AccordionItem borderTop="2px solid #1E1E1F" borderBottom="15px solid #1E1E1F">
-                                    <h2>
-                                        <AccordionButton p='5'>
-                                            <Box flex='1' textAlign='left'>
-                                                <Flex
-                                                    align="center"
-                                                    flexDirection="row"
-                                                    justify="space-between"
-                                                    mr='12'
-                                                >
-                                                    Jan K.
-                                                    <WrapItem>
-                                                        <Button colorScheme='red'>Zarezerwuj rozmowę</Button>
-                                                    </WrapItem>
-                                                </Flex>
-                                            </Box>
-                                            <AccordionIcon />
-                                        </AccordionButton>
-                                    </h2>
-                                    <AccordionPanel  p='15' m='3' bgColor="#222324">
-                                        <TableContainer>
-                                            <Table variant='unstyled'>
-                                                <Thead  w='100vw'>
-                                                    <Tr style={{
-                                                        whiteSpace: "normal",
-                                                        wordWrap: "break-word",
-                                                    }}>
-                                                        <Th>Ocena przejścia kursu</Th>
-                                                        <Th>Ocena aktywności i zaangazowania na kursie</Th>
-                                                        <Th>Ocena kodu w projekcie własnym</Th>
-                                                        <Th>Ocena pracy w zespole scrum</Th>
-                                                        <Th>Preferowane miejsce pracy</Th>
-                                                        <Th>Docelowe miasto, gdzie chce pracować kandydat</Th>
-                                                        <Th>Oczekiwany typ kontraktu</Th>
-                                                        <Th>Oczekiwane wynagrodzenie miesięczne netto</Th>
-                                                        <Th>Zgoda na odbycie bezpłatnych prakty/stazu na początek</Th>
-                                                        <Th>Komercyjne doświadczenie w programowaniu</Th>
-                                                    </Tr>
-                                                </Thead>
-                                                <Tbody>
-                                                    <Tr>
-                                                        <Td>5 / 5</Td>
-                                                        <Td>3 / 5</Td>
-                                                        <Td>4 / 5</Td>
-                                                        <Td>5 / 5</Td>
-                                                        <Td>Biuro</Td>
-                                                        <Td>Warszawa</Td>
-                                                        <Td>Umowa o pracę</Td>
-                                                        <Td>8 000 zł</Td>
-                                                        <Td>TAK</Td>
-                                                        <Td>6 miesięcy</Td>
-                                                    </Tr>
-                                                </Tbody>
-                                            </Table>
-                                        </TableContainer>
-                                    </AccordionPanel>
-                                </AccordionItem>
-
-                                <AccordionItem borderTop="2px solid #1E1E1F" borderBottom="15px solid #1E1E1F">
-                                    <h2>
-                                        <AccordionButton p='5'>
-                                            <Box flex='1' textAlign='left'>
-                                                <Flex
-                                                    align="center"
-                                                    flexDirection="row"
-                                                    justify="space-between"
-                                                    mr='12'
-                                                >
-                                                    Katarzyna S.
-                                                    <WrapItem>
-                                                        <Button colorScheme='red'>Zarezerwuj rozmowę</Button>
-                                                    </WrapItem>
-                                                </Flex>
-                                            </Box>
-                                            <AccordionIcon />
-                                        </AccordionButton>
-                                    </h2>
-                                    <AccordionPanel  p='15' m='3' bgColor="#222324">
-                                        <TableContainer>
-                                            <Table variant='unstyled'>
-                                                <Thead  w='100vw'>
-                                                    <Tr style={{
-                                                        whiteSpace: "normal",
-                                                        wordWrap: "break-word",
-                                                    }}>
-                                                        <Th>Ocena przejścia kursu</Th>
-                                                        <Th>Ocena aktywności i zaangazowania na kursie</Th>
-                                                        <Th>Ocena kodu w projekcie własnym</Th>
-                                                        <Th>Ocena pracy w zespole scrum</Th>
-                                                        <Th>Preferowane miejsce pracy</Th>
-                                                        <Th>Docelowe miasto, gdzie chce pracować kandydat</Th>
-                                                        <Th>Oczekiwany typ kontraktu</Th>
-                                                        <Th>Oczekiwane wynagrodzenie miesięczne netto</Th>
-                                                        <Th>Zgoda na odbycie bezpłatnych prakty/stazu na początek</Th>
-                                                        <Th>Komercyjne doświadczenie w programowaniu</Th>
-                                                    </Tr>
-                                                </Thead>
-                                                <Tbody>
-                                                    <Tr>
-                                                        <Td>5 / 5</Td>
-                                                        <Td>3 / 5</Td>
-                                                        <Td>4 / 5</Td>
-                                                        <Td>5 / 5</Td>
-                                                        <Td>Biuro</Td>
-                                                        <Td>Warszawa</Td>
-                                                        <Td>Umowa o pracę</Td>
-                                                        <Td>8 000 zł</Td>
-                                                        <Td>TAK</Td>
-                                                        <Td>6 miesięcy</Td>
-                                                    </Tr>
-                                                </Tbody>
-                                            </Table>
-                                        </TableContainer>
-                                    </AccordionPanel>
-                                </AccordionItem>
-                            </Accordion>
+                        <Box w='100%'>
+                            {
+                                studentList.map(student => (
+                                    <StudentSmallInfo key={student.studentId} student={student} />
+                                ))
+                            }
                         </Box>
                     </Flex>
                 </Center>
