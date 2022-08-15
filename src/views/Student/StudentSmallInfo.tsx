@@ -61,7 +61,7 @@ export const StudentSmallInfo = ({student}: Props) => {
                             <Text><Text as='span' fontWeight='bold'>{courseCompletion}</Text> <Text as='span' opacity='0.5'>/ 5</Text></Text>
                         </Flex>
                         <Flex flexDirection='column' m='1' p='2' justifyContent='space-between' h='100%'>
-                            <Text fontSize='13px' opacity='0.7' mb='7'>Ocena aktywności i zaangazowana na kursie</Text>
+                            <Text fontSize='13px' opacity='0.7' mb='7'>Ocena aktywności i zaangażowana na kursie</Text>
                             <Text><Text as='span' fontWeight='bold'>{courseEngagment}</Text> <Text as='span' opacity='0.5'>/ 5</Text></Text>
                         </Flex>
                         <Flex flexDirection='column' m='1' p='2' justifyContent='space-between' h='100%'>
@@ -89,7 +89,7 @@ export const StudentSmallInfo = ({student}: Props) => {
                             <Text fontWeight='bold'>{expectedSalary ? `${separateNumber(+expectedSalary)} zł` : 'Bez znaczenia'}</Text>
                         </Flex>
                         <Flex flexDirection='column' m='1' p='2' justifyContent='space-between' h='100%'>
-                            <Text fontSize='13px' opacity='0.7' mb='7'>Zgoda na odbycie bezpłatnych prakty/stazu na początek</Text>
+                            <Text fontSize='13px' opacity='0.7' mb='7'>Zgoda na odbycie bezpłatnych prakty/stażu na początek</Text>
                             <Text fontWeight='bold'>{canTakeApprenticeship}</Text>
                         </Flex>
                         <Flex flexDirection='column' m='1' p='2' justifyContent='space-between' h='100%'>
