@@ -1,26 +1,50 @@
 import React from 'react';
-import logo from './logo.svg';
+import {Route, Routes} from 'react-router-dom';
+import {Header} from './components/layout/Header';
+import {Auth} from './views/Auth/Auth';
+import {Hr} from './views/Hr/Hr';
+import {Student} from './views/Student/Student';
+import {Admin} from './views/Admin/Admin';
+import {ActivateUser} from "./views/User/ActivateUser";
+import {InfoModal} from "./common/components/InfoModal/InfoModal";
+import {LoadingSpinner} from "./common/components/LoadingSpinner/LoadingSpinner";
+import {useAuth} from "./common/hooks/auth-hook";
+import {RecoverPassword} from "./views/User/RecoverPassword";
+import {NotFoundPage} from "./views/NotFoundPage/NotFoundPages";
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
-
-export default App;
+export const App = () => {
+    const {isLoading,error,isLoggedIn,userRole,clearError} = useAuth()
+        let routes;
+        if (!isLoggedIn) {
+            routes = <Route path="/" element={<Auth/>}/>;
+        } else {
+            switch (userRole) {
+                case 0:
+                    routes = (<Route path="/" element={<Admin/>}/>);
+                    break;
+                case 1:
+                    routes = (<Route path="/" element={<Student/>}/>);
+                    break;
+                case 2:
+                    routes = (<Route path="/" element={<Hr/>}/>);
+                    break;
+                default:
+                    routes = <Route path="/" element={<Auth/>}/>;
+            }
+        }
+        return (
+            <>
+                {isLoading && <LoadingSpinner/>}
+                {error && <InfoModal isError message={error} onClose={clearError} title={'Nieudana próba!'}/>}
+                {isLoggedIn && <Header/>}
+                <Routes>
+                    {routes}
+                    <Route path="/activate/:userId/:activeToken" element={<ActivateUser/>}/>
+                    <Route path="/recover-password" element={<RecoverPassword/>}/>
+                    <Route path="/*" element={<NotFoundPage/>}/>
+                </Routes>
+            </>
+        );
+    }
+;
